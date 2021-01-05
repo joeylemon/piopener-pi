@@ -1,5 +1,6 @@
 import * as routes from './routes.js'
 import * as constants from './constants.js'
+import * as door from './door.js'
 import schedule from 'node-schedule'
 import request from 'request'
 import express from 'express'
@@ -20,6 +21,8 @@ schedule.scheduleJob('0 0 * * *', () => {
             console.log("sent update ip request")
         })
 })
+
+setInterval(door.checkForLongOpen, 30000)
 
 app.get('/status/:token', routes.auth, routes.status)
 app.get('/move/:token', routes.auth, routes.move)

@@ -5,6 +5,12 @@ import request from 'request'
 // How often to send request to server with new state (milliseconds)
 const UPDATE_FREQ = 4000
 
+// The last time the garage door has been observed to be open
+let lastClosedTime = Date.now()
+
+// The last time a long open notification was sent
+let lastNotification = 0
+
 class Switch {
     constructor(pin) {
         this.pin = pin
@@ -76,4 +82,28 @@ export async function getStatus() {
     else if (!open) return "open"
 
     return "between"
+}
+
+export async function checkForLongOpen() {
+    const closed = await switches.closed.value().catch(err => new Error(err))
+    if (closed instanceof Error) {
+        lastClosedTime = Date.now()
+        return console.error(`couldn't check for long open status: ${closed.toString()}`)
+    }
+
+    const openDuration = Date.now() - lastClosedTime
+    const lastAlertDuration = Date.now() - lastNotification
+
+    // Send a notification if the door has been open for more than the specified duration
+    // and there hasn't been too many notifications recently
+    if (!closed && openDuration > constants.LONG_OPEN_DURATION && lastAlertDuration > constants.LONG_OPEN_DURATION * 2) {
+        request(`https://jlemon.org/garage/sendopenalert/${openDuration}/${constants.OTHER_TOKEN}`, (error, response, body) => {
+            if (error || response.statusCode != 200)
+                console.error(error)
+        })
+        lastNotification = Date.now()
+    } else if (closed) {
+        lastClosedTime = Date.now()
+        lastNotification = 0
+    }
 }
