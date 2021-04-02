@@ -97,6 +97,7 @@ export async function checkForLongOpen() {
     // Send a notification if the door has been open for more than the specified duration
     // and there hasn't been too many notifications recently
     if (!closed && openDuration > constants.LONG_OPEN_DURATION && lastAlertDuration > constants.LONG_OPEN_DURATION * 2) {
+	console.log("send long open notification")
         request(`https://jlemon.org/garage/sendopenalert/${openDuration}/${constants.OTHER_TOKEN}`, (error, response, body) => {
             if (error || response.statusCode != 200)
                 console.error(error)

@@ -5,5 +5,10 @@
         "start": "pm2 start piopener",
         "stop": "pm2 stop piopener",
         "log": "pm2 logs piopener"
+    },
+    "dependencies": {
+        "request": "^2.88.2",
+        "rpi-gpio": "^2.1.7",
+        "socket.io-client": "^4.0.1"
     }
 }
