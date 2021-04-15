@@ -18,6 +18,8 @@ After continuously losing, forgetting, or otherwise destroying our garage door o
 
 We soldered two wires from the Raspberry Pi to the circuit board inside of one of our garage door openers, allowing us to send a signal programatically to the door opener. This allows us to set up the endpoint for opening and closing the garage door. In order to check of the status of the door (opened or closed), we wired one magnetic reed switch to the Pi and one to the garage door, allowing us to check if the door is closed if the switches are connected.
 
+![Wiring diagram of piopener-pi](https://github.com/joeylemon/piopener-pi/blob/master/wiring/Wiring%20Diagram.png?raw=true)
+
 ### What is piopener-pi?
 
 This repository is the code that lives on the actual Raspberry Pi. It is wired to the reed switches and the door remote, and can therefore send and receive signals programatically via the Pi's GPIO pins.
