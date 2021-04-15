@@ -26,4 +26,3 @@ This repository is the code that lives on the actual Raspberry Pi. It is wired t
 
 #### Technologies:
 - Node.js and socket.io: this Pi uses Node.js and socket.io to maintain real-time communication with the [piopener-server](https://github.com/joeylemon/piopener-server) for opening and closing the garage and retrieving the status of the door
-- Raspberry Pi GPIO: the interface to the GPIO pins on the Pi allows the Node.js server to send signals to the opener circuit board and receive signals from the reed switches.
